@@ -15,7 +15,7 @@ using System.Speech.Synthesis;
 
 namespace QueuSystem
 {
-    
+
     public partial class Display : Form
     {
         public static Display instance;
@@ -40,8 +40,8 @@ namespace QueuSystem
             lb = lab;
             tb = txt;
             //lv = listView1;
-            lvi = item;
-            lv = listView1;
+            //lvi = item;
+            //lv = listView1;
             displayData = dataGridView1;
             speech = new SpeechSynthesizer();
             //tb = tt;
@@ -88,12 +88,12 @@ namespace QueuSystem
                 //lb.Name = no;
                 //lb.Font = new Font("Arial", 12, FontStyle.Regular);
                 //ListView
-                lvi = new ListViewItem(ro);
-                lvi.Name = no;
-                lvi.SubItems.Add(ss); 
-                lvi.SubItems.Add(no);
-                lvi.SubItems.Add("");
-                listView1.Items.Add(lvi);
+                //lvi = new ListViewItem(ro);
+                //lvi.Name = no;
+                //lvi.SubItems.Add(ss);
+                //lvi.SubItems.Add(no);
+                //lvi.SubItems.Add("");
+                //listView1.Items.Add(lvi);
 
                 //lvi2 = new ListViewItem(no);
                 //lvi2.SubItems.Add(no);
@@ -103,7 +103,7 @@ namespace QueuSystem
         }
         Label lab = new Label();
         Button button = new Button();
-        TextBox txt= new TextBox();
+        TextBox txt = new TextBox();
         ListViewItem item = new ListViewItem();
         int top = 125;
         int left = 1;
@@ -120,7 +120,7 @@ namespace QueuSystem
         {
             return l1;
         }
-       
+
 
         public void Display_Load(object sender, EventArgs e)
         {
@@ -130,7 +130,7 @@ namespace QueuSystem
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -159,6 +159,9 @@ namespace QueuSystem
             con.GetClose();
 
             pictureBox1.Image = Properties.Resources.img1;
+            wmp.URL = "October Clinic .mp4";
+            dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
         }
         public void updatechecklistDisplay()
         {
@@ -219,11 +222,11 @@ namespace QueuSystem
                     //lb.Name = checkBox.Name;
                     //lb.Font = new Font("Arial", 12, FontStyle.Regular);
 
-                    lvi = new ListViewItem(checkBox.Text);
-                    lvi.Name = checkBox.Name;
-                    lvi.SubItems.Add(checkBox.AccessibleName);
-                    lvi.SubItems.Add(checkBox.Name);
-                    listView1.Items.Add(lvi);
+                    //lvi = new ListViewItem(checkBox.Text);
+                    //lvi.Name = checkBox.Name;
+                    //lvi.SubItems.Add(checkBox.AccessibleName);
+                    //lvi.SubItems.Add(checkBox.Name);
+                    //listView1.Items.Add(lvi);
 
                     string[] row = new string[] { checkBox.Text, checkBox.AccessibleName, checkBox.Name };
                     dataGridView1.Rows.Add(row);
@@ -240,7 +243,7 @@ namespace QueuSystem
                 if (l3.Contains(checkBox.Text))
                 {
                     var controls = this.Controls.Find(checkBox.Name, true);
-                    var labels= this.Controls.Find(checkBox.Name, true);
+                    var labels = this.Controls.Find(checkBox.Name, true);
                     foreach (ListViewItem item in Display.instance.lv.Items)
                     {
                         // string text = Display.instance.lvi.SubItems[column].item;
@@ -262,7 +265,7 @@ namespace QueuSystem
                         //}
 
                         //Display.instance.lv.Items[item.Index].Remove();
-                        
+
 
                     }
                     //l3.Remove(checkBox.Name);
@@ -297,33 +300,27 @@ namespace QueuSystem
         {
 
         }
-        public void loadlistview()
-        {
-            //foreach (CheckBox checkBox in Dashboard.instance.checkedList)
-            //{
-            //    var controls = this.Controls.Find(checkBox.Name, true);
-            //    if (controls != null)
-            //    {
-            //        foreach (var control in controls)
-            //            if (control is Label)
-            //                control.Visible = true;
-            //    }
-            //    if (!l3.Contains(checkBox.Text))
-            //    {
-            //        ListViewItem item = new ListViewItem(checkBox.Text);
-            //        item.SubItems.Add(checkBox.AccessibleName);
-            //        item.SubItems.Add(checkBox.Name);
-            //        listView1.Items.Add(item);
-
-            //        l3.Add(checkBox.Text);
-
-            //    }
-            //}
-        }
+        
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
+        private void wmp_PlayStateChange(object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e)
+        {
+            wmp.settings.setMode("loop", true);
+            if (wmp.playState == WMPLib.WMPPlayState.wmppsStopped)
+            {
+                wmp.Ctlcontrols.play();
+
+            }
+        }
     }
+   
 }
+
+
+
+
+
+
