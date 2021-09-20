@@ -14,7 +14,7 @@ namespace QueuSystem
         public static Dashboard instance;
         Connection con = new Connection();
         public Display dis;
-       
+        
         public CheckedListBox checked1;
         public bool check;
         public CheckBox ch;
@@ -37,7 +37,7 @@ namespace QueuSystem
            
             dt = DateTime.Now;
             speech = new SpeechSynthesizer();
-            speech.Rate = -6;
+            speech.Rate = -3;
            
             //_sound2 = new SoundPlayer(2.wav);
             foreach (CheckBox checkbox in checkedList)
@@ -282,7 +282,7 @@ namespace QueuSystem
                 //    string Clinic_Name = checkbox.AccessibleName;
                 //    string letter = checkbox.AccessibleDescription;
                 //}
-                string sql = "SELECT TOP (1) dbo.Clinc.ClinicLetter, dbo.Clinc.ClinicNumber, MIN(dbo.Appointment.TicketNumber) AS Ticket, CAST(CONVERT(date, dbo.Event.StartOn) AS varchar) AS Date1, dbo.Appointment.AptStatus, dbo.Appointment.Oid FROM dbo.Clinc INNER JOIN dbo.Appointment ON dbo.Clinc.id = dbo.Appointment.clinc INNER JOIN dbo.Event ON dbo.Appointment.Oid = dbo.Event.Oid GROUP BY dbo.Clinc.ClinicLetter, dbo.Clinc.ClinicNumber, dbo.Event.StartOn, dbo.Appointment.AptStatus, dbo.Appointment.Oid, CAST(CONVERT(date, dbo.Event.StartOn) AS varchar) HAVING(dbo.Appointment.AptStatus = 1) AND(dbo.Clinc.ClinicNumber = @no) AND(CAST(CONVERT(date, dbo.Event.StartOn) AS varchar) = @date)";
+                string sql = "SELECT TOP (1) dbo.Clinc.ClinicLetter, dbo.Clinc.ClinicNumber, MIN(dbo.Appointment.TicketNumber) AS Ticket, CAST(CONVERT(date, dbo.Event.StartOn) AS varchar) AS Date1, dbo.Appointment.AptStatus, dbo.Appointment.Oid FROM dbo.Clinc INNER JOIN dbo.Appointment ON dbo.Clinc.id = dbo.Appointment.clinc INNER JOIN dbo.Event ON dbo.Appointment.Oid = dbo.Event.Oid GROUP BY dbo.Clinc.ClinicLetter, dbo.Clinc.ClinicNumber, dbo.Event.StartOn, dbo.Appointment.AptStatus, dbo.Appointment.Oid, CAST(CONVERT(date, dbo.Event.StartOn) AS varchar) HAVING(dbo.Appointment.AptStatus = 0) AND(dbo.Clinc.ClinicNumber = @no) AND(CAST(CONVERT(date, dbo.Event.StartOn) AS varchar) = @date)";
                 SqlCommand cmd = new SqlCommand(sql, con.GetConnectionDB());
                 var i = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
                 DateTime dt = new DateTime();
@@ -300,10 +300,12 @@ namespace QueuSystem
                     txt_No.Text = rd.GetValue(2).ToString();
                     txt_letter.Text = rd.GetValue(0).ToString();
                     txt_Oid.Text = rd.GetValue(5).ToString();
+                    //txt_CLinic_No.Text = rd.GetValue(1).ToString();
                 }
                 con.GetClose();
                 var number = txt_No.Text;
                 var letter = txt_letter.Text;
+                txt_CLinic_No.Text = i;
                 dataGridView1.Rows[e.RowIndex].Cells[3].Value = letter + number;
                 Display.instance.displayData.Rows[e.RowIndex].Cells[3].Value = letter + "-" + number;
                 if (txt_No.Text == "")
@@ -312,24 +314,35 @@ namespace QueuSystem
                 }
                 else
                 {
-                    _sound = new SoundPlayer("No.wav");
+                    //splashscreen.instance.lbNo.Text = number;
+                    //splashscreen.instance.lbclinic.Text = i.ToString();
+                    splashscreen spl = new splashscreen(no: number,clinic:i.ToString(),letter:txt_letter.Text);
+                    spl.Show();
+                    spl.Refresh();
+                    _sound = new SoundPlayer("Number.wav");
                     _sound.PlaySync();
-                   
-                    //_sound.Stop();
-                    
+
+                    _sound.Stop();
+
                     _sound = new SoundPlayer(txt_letter.Text + ".wav");
                     _sound.PlaySync();
+                    //speech.SpeakAsync(txt_letter.Text);
                     _sound = new SoundPlayer(txt_No.Text + ".wav");
                     _sound.PlaySync();
-                    string updateStatus = "Update Appointment set AptStatus='1' where TicketNumber=@ticket AND Oid=@oid ";
-                    SqlCommand cmd1 = new SqlCommand(updateStatus, con.GetConnectionDB());
-                    cmd1.Parameters.AddWithValue("@ticket", txt_No.Text);
-                    cmd1.Parameters.AddWithValue("@oid", txt_Oid.Text);
-                    cmd1.ExecuteNonQuery();
+                    _sound = new SoundPlayer("Clinic_Number.wav") ;
+                    _sound.PlaySync();
+                    _sound = new SoundPlayer(i.ToString() + ".wav");
+                    _sound.PlaySync();
+                    //string updateStatus = "Update Appointment set AptStatus='0' where TicketNumber=@ticket AND Oid=@oid ";
+                    //SqlCommand cmd1 = new SqlCommand(updateStatus, con.GetConnectionDB());
+                    //cmd1.Parameters.AddWithValue("@ticket", txt_No.Text);
+                    //cmd1.Parameters.AddWithValue("@oid", txt_Oid.Text);
+                    //cmd1.ExecuteNonQuery();
                     
                     txt_letter.Clear();
                     txt_No.Clear();
                     txt_Oid.Clear();
+                    //txt_CLinic_No.Clear();
                 }
                 //speech.SelectVoice("Microsoft Hoda Desktop");
                 

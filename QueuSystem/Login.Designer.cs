@@ -60,6 +60,7 @@ namespace QueuSystem
             this.txt_Username.Name = "txt_Username";
             this.txt_Username.Size = new System.Drawing.Size(189, 20);
             this.txt_Username.TabIndex = 2;
+            this.txt_Username.Enter += new System.EventHandler(this.txt_Username_Enter);
             this.txt_Username.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txt_Username_KeyDown);
             // 
             // txt_Password
@@ -69,6 +70,8 @@ namespace QueuSystem
             this.txt_Password.PasswordChar = '*';
             this.txt_Password.Size = new System.Drawing.Size(189, 20);
             this.txt_Password.TabIndex = 3;
+            this.txt_Password.TextChanged += new System.EventHandler(this.txt_Password_TextChanged);
+            this.txt_Password.Enter += new System.EventHandler(this.txt_Password_Enter);
             this.txt_Password.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txt_Password_KeyUp);
             // 
             // btn_Login

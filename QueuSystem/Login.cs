@@ -48,12 +48,27 @@ namespace QueuSystem
 
         private void txt_Username_KeyDown(object sender, KeyEventArgs e)
         {
-            txt_Password.Focus();
+            //txt_Password.Focus();
         }
 
         private void txt_Password_KeyUp(object sender, KeyEventArgs e)
         {
-            txt_Username.Focus();
+            //txt_Username.Focus();
+        }
+
+        private void txt_Username_Enter(object sender, EventArgs e)
+        {
+            //txt_Password.Focus();
+        }
+
+        private void txt_Password_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txt_Password_Enter(object sender, EventArgs e)
+        {
+            //loginUser()
         }
     }
 }

@@ -31,6 +31,7 @@ namespace QueuSystem
         public ListViewItem lvi;
         public ListViewItem lvi2;
         public DataGridView displayData;
+        
         public Display()
         {
             InitializeComponent();
@@ -161,7 +162,7 @@ namespace QueuSystem
             pictureBox1.Image = Properties.Resources.img1;
             wmp.URL = "October Clinic .mp4";
             dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
+            wmp.uiMode = "None";
         }
         public void updatechecklistDisplay()
         {

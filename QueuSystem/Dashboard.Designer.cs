@@ -39,6 +39,7 @@ namespace QueuSystem
             this.txt_Oid = new System.Windows.Forms.TextBox();
             this.txt_letter = new System.Windows.Forms.TextBox();
             this.txt_No = new System.Windows.Forms.TextBox();
+            this.txt_CLinic_No = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -116,11 +117,19 @@ namespace QueuSystem
             this.txt_No.TabIndex = 17;
             this.txt_No.Visible = false;
             // 
+            // txt_CLinic_No
+            // 
+            this.txt_CLinic_No.Location = new System.Drawing.Point(268, 207);
+            this.txt_CLinic_No.Name = "txt_CLinic_No";
+            this.txt_CLinic_No.Size = new System.Drawing.Size(100, 20);
+            this.txt_CLinic_No.TabIndex = 21;
+            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(747, 410);
+            this.Controls.Add(this.txt_CLinic_No);
             this.Controls.Add(this.txt_Oid);
             this.Controls.Add(this.txt_letter);
             this.Controls.Add(this.txt_No);
@@ -145,6 +154,7 @@ namespace QueuSystem
         private System.Windows.Forms.TextBox txt_Oid;
         private System.Windows.Forms.TextBox txt_letter;
         private System.Windows.Forms.TextBox txt_No;
+        private System.Windows.Forms.TextBox txt_CLinic_No;
     }
 }
 
