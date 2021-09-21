@@ -48,6 +48,10 @@ namespace QueuSystem
 
         private void txt_Username_KeyDown(object sender, KeyEventArgs e)
         {
+            if(e.KeyCode==Keys.Enter)
+            {
+                SendKeys.Send("{TAB}");
+            }
             //txt_Password.Focus();
         }
 
@@ -69,6 +73,19 @@ namespace QueuSystem
         private void txt_Password_Enter(object sender, EventArgs e)
         {
             //loginUser()
+        }
+
+        private void txt_Username_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txt_Password_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                SendKeys.Send("{TAB}");
+            }
         }
     }
 }

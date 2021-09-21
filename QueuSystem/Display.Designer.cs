@@ -84,7 +84,7 @@ namespace QueuSystem
             // 
             // label6
             // 
-            this.label6.Font = new System.Drawing.Font("Tahoma", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Font = new System.Drawing.Font("Times New Roman", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.Location = new System.Drawing.Point(581, 38);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(230, 33);
@@ -94,7 +94,7 @@ namespace QueuSystem
             // 
             // label5
             // 
-            this.label5.Font = new System.Drawing.Font("Tahoma", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Font = new System.Drawing.Font("Times New Roman", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(575, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(236, 28);
@@ -108,6 +108,7 @@ namespace QueuSystem
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -115,10 +116,12 @@ namespace QueuSystem
             this.Column2,
             this.Column3,
             this.Column4});
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Right;
             this.dataGridView1.GridColor = System.Drawing.Color.White;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 85);
+            this.dataGridView1.Location = new System.Drawing.Point(812, 85);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.Size = new System.Drawing.Size(558, 245);
             this.dataGridView1.TabIndex = 16;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
@@ -147,12 +150,12 @@ namespace QueuSystem
             // 
             // wmp
             // 
-            this.wmp.Dock = System.Windows.Forms.DockStyle.Right;
+            this.wmp.Dock = System.Windows.Forms.DockStyle.Left;
             this.wmp.Enabled = true;
-            this.wmp.Location = new System.Drawing.Point(554, 85);
+            this.wmp.Location = new System.Drawing.Point(0, 85);
             this.wmp.Name = "wmp";
             this.wmp.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("wmp.OcxState")));
-            this.wmp.Size = new System.Drawing.Size(816, 245);
+            this.wmp.Size = new System.Drawing.Size(858, 245);
             this.wmp.TabIndex = 17;
             this.wmp.PlayStateChange += new AxWMPLib._WMPOCXEvents_PlayStateChangeEventHandler(this.wmp_PlayStateChange);
             // 
@@ -169,6 +172,7 @@ namespace QueuSystem
             this.Name = "Display";
             this.Text = "Display";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Display_FormClosed);
             this.Load += new System.EventHandler(this.Display_Load);
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

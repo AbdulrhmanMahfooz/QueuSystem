@@ -25,6 +25,8 @@ namespace QueuSystem
             //instance = this;
             label2.Text = letter+"-"+no;
             label4.Text = clinic;
+            this.BackColor = Color.AliceBlue;
+            //this.TransparencyKey = Color.AliceBlue;
             //lbNo = label2;
             //lbclinic = label4;
         }
