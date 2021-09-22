@@ -286,7 +286,7 @@ namespace QueuSystem
                 //    string letter = checkbox.AccessibleDescription;
                 //}
                 
-                string sql = "SELECT TOP (1) dbo.Clinc.ClinicLetter, dbo.Clinc.ClinicNumber, MIN(dbo.Appointment.TicketNumber) AS Ticket, CAST(CONVERT(date, dbo.Event.StartOn) AS varchar) AS Date1, dbo.Appointment.AptStatus, dbo.Appointment.Oid FROM dbo.Clinc INNER JOIN dbo.Appointment ON dbo.Clinc.id = dbo.Appointment.clinc INNER JOIN dbo.Event ON dbo.Appointment.Oid = dbo.Event.Oid GROUP BY dbo.Clinc.ClinicLetter, dbo.Clinc.ClinicNumber, dbo.Event.StartOn, dbo.Appointment.AptStatus, dbo.Appointment.Oid, CAST(CONVERT(date, dbo.Event.StartOn) AS varchar) HAVING(dbo.Appointment.AptStatus = 0) AND(dbo.Clinc.ClinicNumber = @no) AND(CAST(CONVERT(date, dbo.Event.StartOn) AS varchar) = @date) AND(MIN(dbo.Appointment.TicketNumber) <> 0)";
+                string sql = "SELECT TOP (1) dbo.Clinc.ClinicLetter, dbo.Clinc.ClinicNumber, MIN(dbo.Appointment.TicketNumber) AS Ticket, CAST(CONVERT(date, dbo.Event.StartOn) AS varchar) AS Date1, dbo.Appointment.AptStatus, dbo.Appointment.Oid,dbo.Appointment.Complete FROM dbo.Clinc INNER JOIN dbo.Appointment ON dbo.Clinc.id = dbo.Appointment.clinc INNER JOIN dbo.Event ON dbo.Appointment.Oid = dbo.Event.Oid GROUP BY dbo.Clinc.ClinicLetter, dbo.Clinc.ClinicNumber, dbo.Event.StartOn, dbo.Appointment.AptStatus, dbo.Appointment.Oid, CAST(CONVERT(date, dbo.Event.StartOn) AS varchar),dbo.Appointment.Complete HAVING (dbo.Appointment.Complete = 0) AND(dbo.Clinc.ClinicNumber = @no) AND(CAST(CONVERT(date, dbo.Event.StartOn) AS varchar) = @date) AND(MIN(dbo.Appointment.TicketNumber) <> 0)";
                 //string sql = "SELECT TOP (1) dbo.Clinc.ClinicLetter, dbo.Clinc.ClinicNumber, MIN(dbo.Appointment.TicketNumber) AS Ticket, CAST(CONVERT(date, dbo.Event.StartOn) AS varchar) AS Date1, dbo.Appointment.AptStatus, dbo.Appointment.Oid,dbo.Appointment.Doctor dbo.Clinc INNER JOIN dbo.Appointment ON dbo.Clinc.id = dbo.Appointment.clinc INNER JOIN dbo.Event ON dbo.Appointment.Oid = dbo.Event.Oid GROUP BY dbo.Clinc.ClinicLetter, dbo.Clinc.ClinicNumber, dbo.Event.StartOn, dbo.Appointment.AptStatus, dbo.Appointment.Oid, CAST(CONVERT(date, dbo.Event.StartOn) AS varchar), dbo.Appointment.Doctor HAVING(dbo.Appointment.AptStatus = 0) AND(MIN(dbo.Appointment.TicketNumber) <> 0) AND(dbo.Appointment.Doctor = @oid) AND (dbo.Clinc.ClinicNumber = @no) AND(CAST(CONVERT(date, dbo.Event.StartOn) AS varchar) = @date) ";
                 SqlCommand cmd = new SqlCommand(sql, con.GetConnectionDB());
                 var i = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
@@ -330,6 +330,8 @@ namespace QueuSystem
                         splashscreen spl = new splashscreen(no: number, clinic: i.ToString(), letter: txt_letter.Text);
                         spl.Show();
                         spl.Refresh();
+                        _sound = new SoundPlayer("announcement.wav");
+                        _sound.PlaySync();
                         _sound = new SoundPlayer("Number.wav");
                         _sound.PlaySync();
 
@@ -344,7 +346,7 @@ namespace QueuSystem
                         _sound.PlaySync();
                         _sound = new SoundPlayer(i.ToString() + ".wav");
                         _sound.PlaySync();
-                        string updateStatus = "Update Appointment set AptStatus='1' where TicketNumber=@ticket AND Oid=@oid ";
+                        string updateStatus = "Update Appointment set Complete=1 where TicketNumber=@ticket AND Oid=@oid ";
                         SqlCommand cmd1 = new SqlCommand(updateStatus, con.GetConnectionDB());
                         cmd1.Parameters.AddWithValue("@ticket", txt_No.Text);
                         cmd1.Parameters.AddWithValue("@oid", txt_Oid.Text);

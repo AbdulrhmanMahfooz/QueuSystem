@@ -227,6 +227,7 @@ namespace QueuSystem
                     string[] row = new string[] { checkBox.Text, checkBox.AccessibleName, checkBox.Name };
                     dataGridView1.Rows.Add(row);
 
+
                     l3.Add(checkBox.Text);
                 }
 
