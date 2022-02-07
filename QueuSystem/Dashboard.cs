@@ -48,6 +48,7 @@ namespace QueuSystem
                 string Clinic_Name = checkbox.AccessibleName;
                 //string letter = checkbox.AccessibleDescription;
                 string oid = checkbox.AccessibleDescription;
+                
                 l3.Add(Clinic_No);
 
                
@@ -57,13 +58,17 @@ namespace QueuSystem
             Display ds = new Display();
             dis = ds;
             ds.Show();
+            
 
         }
         int top = 50;
         int left = 100;
         private void Form1_Load(object sender, EventArgs e)
         {
-           
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                column.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
 
             foreach (CheckBox checkbox in checkedList)
             {
@@ -72,7 +77,7 @@ namespace QueuSystem
                 string Clinic_No = checkbox.Name;
                 string Clinic_Name = checkbox.AccessibleName;
                 string letter = checkbox.AccessibleDescription;
-
+               
                 l3.Add(Clinic_No);
 
             }
@@ -112,6 +117,7 @@ namespace QueuSystem
                 if(ch.Checked==true)
                 {
                     checkedList.Add(ch);
+                    
                    
                 }
                 else
@@ -220,7 +226,7 @@ namespace QueuSystem
                 //MessageBox.Show("You selected: " + ch.Text);
                 checkedList.Add(ch);
                 uncheckedList.Remove(ch);
-
+                ch.Enabled = false;
                 updatechecklist();
                 //Calling.instance.updatechecklist();
                 Display.instance.updatechecklistDisplay();
@@ -231,6 +237,7 @@ namespace QueuSystem
                 //MessageBox.Show("You Unselected:" + ch.Text);
                 checkedList.Remove(ch);
                 uncheckedList.Add(ch);
+                ch.Enabled = true;
                 //Calling.instance.removeButton();
                 //Display.instance.removeButtonDisplay();
             }
@@ -315,8 +322,7 @@ namespace QueuSystem
                 var number = txt_No.Text;
                 var letter = txt_letter.Text;
                 txt_CLinic_No.Text = i;
-                dataGridView1.Rows[e.RowIndex].Cells[3].Value = letter + number;
-                Display.instance.displayData.Rows[e.RowIndex].Cells[3].Value = letter + "-" + number;
+                
                 if (txt_No.Text == "")
                 {
                     MessageBox.Show("There is no more patint");
@@ -325,12 +331,18 @@ namespace QueuSystem
                 {
                     //splashscreen.instance.lbNo.Text = number;
                     //splashscreen.instance.lbclinic.Text = i.ToString();
-                    try
-                    {
-                        splashscreen spl = new splashscreen(no: number, clinic: i.ToString(), letter: txt_letter.Text);
-                        spl.Show();
-                        spl.Refresh();
+                   // try
+                   // {
+                        dataGridView1.Rows[e.RowIndex].Cells[3].Value = letter + number;
+                        Display.instance.displayData.Rows[e.RowIndex].Cells[3].Value = letter + "-" + number;
+                        Display.instance.showSplashScreen(number, i.ToString(), txt_letter.Text);
+                        //splashscreen spl = new splashscreen(no: number, clinic: i.ToString(), letter: txt_letter.Text);
+                        //spl.Show();
+                        //spl.Refresh();
+                        
                         _sound = new SoundPlayer("announcement.wav");
+                        _sound.PlaySync();
+                        _sound = new SoundPlayer("customer.wav");
                         _sound.PlaySync();
                         _sound = new SoundPlayer("Number.wav");
                         _sound.PlaySync();
@@ -342,24 +354,26 @@ namespace QueuSystem
                         //speech.SpeakAsync(txt_letter.Text);
                         _sound = new SoundPlayer(txt_No.Text + ".wav");
                         _sound.PlaySync();
+                        _sound = new SoundPlayer("GoTo.wav");
+                        _sound.PlaySync();
                         _sound = new SoundPlayer("Clinic_Number.wav");
                         _sound.PlaySync();
                         _sound = new SoundPlayer(i.ToString() + ".wav");
                         _sound.PlaySync();
-                        string updateStatus = "Update Appointment set Complete=1 where TicketNumber=@ticket AND Oid=@oid ";
-                        SqlCommand cmd1 = new SqlCommand(updateStatus, con.GetConnectionDB());
-                        cmd1.Parameters.AddWithValue("@ticket", txt_No.Text);
-                        cmd1.Parameters.AddWithValue("@oid", txt_Oid.Text);
-                        cmd1.ExecuteNonQuery();
+                    string updateStatus = "Update Appointment set Complete=1 where TicketNumber=@ticket AND Oid=@oid ";
+                    SqlCommand cmd1 = new SqlCommand(updateStatus, con.GetConnectionDB());
+                    cmd1.Parameters.AddWithValue("@ticket", txt_No.Text);
+                    cmd1.Parameters.AddWithValue("@oid", txt_Oid.Text);
+                    cmd1.ExecuteNonQuery();
 
-                        txt_letter.Clear();
+                    txt_letter.Clear();
                         txt_No.Clear();
                         txt_Oid.Clear();
-                    }
-                    catch
-                    {
-                        MessageBox.Show("error");
-                    }
+                    //}
+                    //catch
+                    //{
+                     //   MessageBox.Show("error");
+                   // }
                    
                     //txt_CLinic_No.Clear();
                 }

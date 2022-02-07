@@ -153,11 +153,18 @@ namespace QueuSystem
             //updatechecklistDisplay();
             Console.WriteLine(l1);
             con.GetClose();
-
+            foreach (DataGridViewColumn column in dataGridView1.Columns)
+            {
+                column.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
             pictureBox1.Image = Properties.Resources.img1;
             wmp.URL = "October Clinic .mp4";
             dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            wmp.uiMode = "None";
+            wmp.uiMode = "none";
+            wmp.settings.setMode("loop", true);
+            wmp.settings.volume = 35;
+            
+            dataGridView1.RowTemplate.Height = 40;
         }
         public void updatechecklistDisplay()
         {
@@ -226,7 +233,7 @@ namespace QueuSystem
 
                     string[] row = new string[] { checkBox.Text, checkBox.AccessibleName, checkBox.Name };
                     dataGridView1.Rows.Add(row);
-
+                   
 
                     l3.Add(checkBox.Text);
                 }
@@ -313,6 +320,20 @@ namespace QueuSystem
             }
         }
 
+        public void showSplashScreen(string number, string clinic, string letter)
+        {
+            splashscreen spl = new splashscreen(number, clinic, letter);
+            if (Screen.AllScreens.Length > 1)
+            {
+                spl.Location = Screen.AllScreens[1].WorkingArea.Location;
+                Rectangle bounds = Screen.AllScreens[1].Bounds;
+                spl.Top = bounds.Top + (Height - spl.Height) / 2;
+                spl.Left = bounds.Left + (Width - spl.Width) / 2;
+                spl.StartPosition = FormStartPosition.Manual;
+            }
+            spl.Show();
+            spl.Refresh();
+        }
         
         private void Display_FormClosed(object sender, FormClosedEventArgs e)
         {
